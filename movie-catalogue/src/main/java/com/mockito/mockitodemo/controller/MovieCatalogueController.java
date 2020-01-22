@@ -27,14 +27,15 @@ public class MovieCatalogueController {
   public ResponseEntity<List<CatalogueItem>> getCatalogue(@PathVariable("userid") String userId) {
 
     UserRating userRating =
-        restTemplate.getForObject("http://localhost:8083/rating/users/" + userId, UserRating.class);
+        restTemplate.getForObject(
+            "http://MOVIE-RATING-MICROSERVICE/rating/users/" + userId, UserRating.class);
     List<CatalogueItem> catalogueItems =
         userRating.getUserRatings().stream()
             .map(
                 rating -> {
                   Movie movie =
                       restTemplate.getForObject(
-                          "http://localhost:8081/movies/" + rating.getMovieId(), Movie.class);
+                          "http://MOVIE-INFO/movies/" + rating.getMovieId(), Movie.class);
                   //                  Movie movie =
                   //                      webClientBuilder
                   //                          .build()
